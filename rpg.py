@@ -2,14 +2,20 @@ import random
 from levels import level_one, level_two
 from rpg_character import rpgCharacter
 
-hero = rpgCharacter("Bleep", "Orc", "Mage", ["Stamina", "Strength"], 1, 100, 0)
+# Gotta have a banner right?
+print("__________  __________   ________  __________        .__ .__       .___               ") 
+print("\______   \ \______   \ /  _____/  \______   \ __ __ |__||  |    __| _/  ____  _______") 
+print(" |       _/  |     ___//   \  ___   |    |  _/|  |  \|  ||  |   / __ | _/ __ \ \_  __ \\")
+print(" |    |   \  |    |    \    \_\  \  |    |   \|  |  /|  ||  |__/ /_/ | \  ___/  |  | \/")
+print(" |____|_  /  |____|     \______  /  |______  /|____/ |__||____/\____ |  \___  > |__|   ")
+print("        \/                     \/          \/                       \/      \/         ")
 
-print("Our Hero: ")
+
+hero = rpgCharacter("Bleep", "Orc", "Mage", ["Stamina", "Strength"], 1, 100, 0)
 hero.status()
 
-currlvl = level_one.levelOne()
-
 print("Level One: ")
+currlvl = level_one.levelOne()
 currlvl.printMap()
 
 # handle character movement on map
@@ -21,10 +27,10 @@ def exploreMap(level):
     opensquares = level.opensquares
     finish      = level.finish[0][::-1]
 
-
     # Make a Move ....
     for(row, square) in enumerate(opensquares):
 
+        # reverse our open square tupel for sanity
         square = square[::-1]
 
         diceroll = random.randrange(20)
