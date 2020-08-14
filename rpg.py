@@ -1,5 +1,5 @@
 import random
-from levels import level_one
+from levels import level_one, level_two
 from rpg_character import rpgCharacter
 
 hero = rpgCharacter("Bleep", "Orc", "Mage", ["Stamina", "Strength"], 1, 100, 0)
@@ -154,10 +154,11 @@ def exploreMap(level):
         print("*****************************************************")
         print("\n")
 
+
+# Run the thing ..
 exploreMap(currlvl)
 
+# Next Level
+currlvl = level_two.levelTwo()
+exploreMap(currlvl)
 
-
-#handle probability of enemey or item encounter
-#
-# handle combat
