@@ -13,7 +13,7 @@ class levelOne:
             ["X", "F", "X"]]
     
     def printMap(self):
-        for (y, row) in enumerate(self.map()):
+        for (y, row) in enumerate(self.matrix):
             prow = []
             for (x, letter) in enumerate(row):
                 prow.append(letter)
@@ -31,4 +31,5 @@ class levelOne:
         self.start       = letter_positions['S']
         self.opensquares = letter_positions[' ']
         self.finish      = letter_positions['F']
+        self.matrix      = self.map()
 

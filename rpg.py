@@ -16,90 +16,143 @@ currlvl.printMap()
 def exploreMap(level):
     
     # Set our start, path, and end points
-    curr_pos    = level.start[0]
+    # Reverse our start and finish tupels for sanity
+    curr_pos    = level.start[0][::-1]
     opensquares = level.opensquares
-    finish      = level.finish[0]
+    finish      = level.finish[0][::-1]
 
-   
+
     # Make a Move ....
     for(row, square) in enumerate(opensquares):
-        # square gives coords as (col, row)
+
+        square = square[::-1]
 
         diceroll = random.randrange(20)
         if(15 >= diceroll):
             print( "enemy encounter" )
 
-            minion = rpgCharacter("Doop", "Goblin", "Minion", ["N/A"], 1, random.randrange(10), 0)
-
+            minion = rpgCharacter("Doop", "Goblin", "Minion", ["N/A"], 1, random.randrange(1,10), 0)
 
             # Fight enemy until either it dies or hero dies
             while( hero.health > 0 and minion.health > 0):
-                hero_attack = hero.attack()
+                hero_attack  = hero.attack()
                 enemy_attack = minion.attack()
 
                 if(hero_attack):
                     print("hero does " + str(hero_attack) + " damage")
                     minion.damage(hero_attack)
+                else:
+                    print("hero misses ...")
    
                 if(enemy_attack):
                     print("enemy does " + str(enemy_attack) + " damage")
                     hero.damage(enemy_attack)
- 
-            if(minion.health <= 0):
-                print("enemy is dead")
+                else:
+                    print("enemy misses ...") 
 
+            if(minion.health <= 0):
+                print("enemy is dead - hero earns 10 XP!")
                 hero.addXp(10)
                 if(hero.xp >= 100):
                     hero.levelUp()
 
                 hero.status()
 
-
-
-        # Check for Up / Down
+        # square gives coords as (col, row)
+        # Check for Right / Left
         if(square[0] == curr_pos[0] and square[1] == (curr_pos[1] + 1)):
-            print("Move Down")
+            print("Move Right")
+
+            level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "."
+
             curr_pos = square
+
+            level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "C"
+            level.printMap()
 
         if(square[0] == curr_pos[0] and square[1] == (curr_pos[1] - 1)):
-            print("Move Up")
+            print("Move Left")
+
+            level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "."
+
             curr_pos = square
 
-        # Check for Left / Right
+            level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "C"
+            level.printMap()
+
+        # Check for Down / Up
         if(square[0] == (curr_pos[0] + 1) and square[1] == curr_pos[1]):
-            print("Move Right")
+            print("Move Down")
+
+            level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "."
+
             curr_pos = square
+
+            level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "C"
+            level.printMap()
 
         if(square[0] == (curr_pos[0] - 1) and square[1] == curr_pos[1]):
-            print("Move Left")
-            curr_pos = square       
+            print("Move Up")
 
-    print('open squares complete ..')
+            level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "."
 
-    # After opn squares, check if we're right next to finish
-    # Check for Up / Down
+            curr_pos = square
+
+            level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "C"
+            level.printMap()
+
+
+    # After open squares, check if we're right next to finish
+    # Check for Right / Left
     if(finish[0] == curr_pos[0] and finish[1] == (curr_pos[1] + 1)):
-        print("Finish Down")
+        print("Finish Right")
+
+        level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "."
+
         curr_pos = finish
+
+        level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "C"
+        level.printMap()
 
     if(finish[0] == curr_pos[0] and finish[1] == (curr_pos[1] - 1)):
-        print("Finish Up")
+        print("Finish Left")
+
+        level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "."
+
         curr_pos = finish
 
-    # Check for Left / Right
+        level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "C"
+        level.printMap()
+
+    # Check for Down / Up
     if(finish[0] == (curr_pos[0] + 1) and finish[1] == curr_pos[1]):
-        print("Finish Right")
+        print("Finish Down")
+
+        level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "."
+
         curr_pos = finish
 
+        level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "C"
+        level.printMap()
 
     if(finish[0] == (curr_pos[0] - 1) and finish[1] == curr_pos[1]):
-        print("Finish Left")
+        print("Finish Up")
+
+        level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "."
+
         curr_pos = finish
+
+        level.matrix[ curr_pos[0] ][ curr_pos[1] ] = "C"
+        level.printMap()
 
 
     if(curr_pos == finish):
-        print("End Level")
 
+        print("\n")
+        print("*****************************************************")
+        print("**           Level End - Good Job!                 **")
+        print("*****************************************************")
+        print("\n")
 
 exploreMap(currlvl)
 
